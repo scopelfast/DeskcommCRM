@@ -6,26 +6,74 @@ Quando discordar, **a tela / o changelog oficial mandam**.
 
 | | Versão | Quando |
 |---|---|---|
-| **Neste lab** (`C:\DeskcommCRM`) | **1.124.0** | overlay 24/11/2026 |
-| **Última no GitHub / no site** | **1.124.0** | 23/11/2026 |
+| **Neste lab** (`C:\DeskcommCRM`) | **1.126.0** | overlay 25/11/2026 |
+| **Última no GitHub / no site** | **1.126.0** | 25/11/2026 |
 
-O código e as 40 migrations (1.115 → 1.124) já estão no disco e no Postgres
+O código e as 9 migrations (1.125 + 1.126) já estão no disco e no Postgres
 `55322`. **Reinicie o 3020** para a tela pegar a versão. Não foi `update.sh`.
 
 Não ligue chamada de voz. Não prospecte no número de teste.
 
-### ⚠️ Requer atenção neste salto (1.115 → 1.124)
+### ⚠️ Requer atenção neste salto (1.124 → 1.126)
 
-- **1.118** — campo personalizado do funil só vai para a IA se estiver marcado
-  **“A IA pode ler este campo”**. Sem a marca, o agente deixa de ver o que
-  já via. Caminho: CRM → Ver tudo em CRM → Etapas do funil.
-- **1.121** — API de serviços recusa com **código**, não frase. Integração
-  Atlas-go que comparava texto de `error.details` precisa comparar o código.
-- **1.123** — `SENTRY_DSN` vazio **desliga** telemetria (não mexa no `.env`
-  daqui). Agente com “Não atender em feriado” **desligado** (padrão) volta a
-  marcar na véspera/dia de feriado; se a clínica fecha, ligue a opção.
+- **1.125** — na **VPS**, o `update.sh` recusa se faltar disco; `BACKUP_KEEP`
+  no `.env` (padrão 14). Não rode `docker image prune -a` nem
+  `docker system prune --volumes` (leva sessão do WhatsApp e o banco).
+  Neste lab Windows isso **não se aplica**.
+- **1.126** — conversões de etapa do Google Ads: com **mais de uma conta**
+  cadastrada, o clique precisa trazer `google_customer_id`. Com uma conta só,
+  nada muda. Negócios já abertos sem o ID da conta continuam sem enviar.
+- **1.126** — tipo de agendamento passa a usar o **fuso da empresa**. Se a
+  empresa não for São Paulo, confira a grade de horários dos serviços.
+
+O que já valia no salto 1.115 → 1.124 continua: campo do funil só vai à IA
+se marcado “A IA pode ler este campo”; API de serviços recusa por **código**;
+`SENTRY_DSN` vazio desliga telemetria.
 
 ---
+
+## 1.126.0 — destaques (oficial 25/11)
+
+Fonte: [changelog 1.126.0](https://www.deskcomm.com.br/changelog/1.126.0).
+
+Dá para mostrar no lab (depois de **reiniciar o 3020**):
+
+- **Sala/mesa na consulta** — com o módulo Reservas de lugar, a tela e o
+  agente escolhem o lugar livre; lembrete com `{{lugar}}`.
+- **Mensagens agendadas que se repetem** — diária até anual, com data de
+  término. Envio único continua igual.
+- **Contato no negócio do funil** — “Editar negócio” agora vincula um
+  contato já existente (não cria ficha nova).
+- **AI/ML API** — nova empresa de IA em IA › Credenciais. Só vale se
+  alguém cadastrar a chave.
+- **Painel de vendas** — período num campo só; coluna Vendedor.
+- **Assumir / devolver** — a devolução automática não toma a conversa
+  que um atendente acabou de assumir (migration 9472, já aplicada).
+
+Ainda **travado / não ligar neste lab:**
+
+- **Chat no site** — código e aba existem, mas o módulo **não liga** nesta
+  versão (falta o teto de IA para visitante anônimo). Não prometa.
+- Chamada de voz — continua fora.
+
+Ferramentas de agente novas: `crm_count_conversations`. Na VPS, comando
+`change-email.sh` troca o e-mail de login.
+
+## 1.125.0 — destaques (oficial 24/11)
+
+Fonte: [changelog 1.125.0](https://www.deskcomm.com.br/changelog/1.125.0).
+
+- **Inbox:** anotações do cliente na lateral; Fila pode ordenar “Mais
+  recentes”; painel do negócio com funil em cima e valor embaixo.
+- **Funil:** ao arquivar/excluir, transferir negócios em andamento para
+  outro funil (contagem na frente).
+- **Agente:** opção “Continuar a conversa assim que a equipe devolver ao
+  automático” (nasce **desligada**).
+- **Tipos de link do contato** — Configurações escolhe quais aparecem
+  (Instagram, site, etc.). Desmarcar não apaga o valor gravado.
+- **Canal oficial Meta:** “Conectar com o Facebook” (Embedded Signup) —
+  só se o app da Meta estiver preenchido em Admin › API Oficial.
+- Agente: `crm_count_leads` com `por_etapa`.
 
 ## 1.124.0 — destaques (oficial 23/11)
 
@@ -151,6 +199,6 @@ portas `5532x` e tokens `dsk_` **não mudaram** nessas duas.
 
 ## Onde ler o oficial
 
-- Site: [v1.124.0](https://www.deskcomm.com.br/changelog/1.124.0)
-- Nesta pasta: `CHANGELOG.md` (abre em `[1.124.0]`).
+- Site: [v1.126.0](https://www.deskcomm.com.br/changelog/1.126.0)
+- Nesta pasta: `CHANGELOG.md` (abre em `[1.126.0]`).
 - Ajuda no CRM logado: `/app/ajuda`.

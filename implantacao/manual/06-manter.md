@@ -6,7 +6,7 @@ Duas máquinas, duas regras.
 
 É **laboratório**. Não é git. Não é a VPS.
 
-- Código e banco do lab: **v1.124.0** (oficial, 24/11/2026). Não entra sozinho da próxima vez.
+- Código e banco do lab: **v1.126.0** (oficial, 25/11/2026). Não entra sozinho da próxima vez.
 - CRM: `http://localhost:3020`
 - Não rode `update.sh` aqui.
 - Não copie esta pasta para a VPS nem para o GitHub oficial.
